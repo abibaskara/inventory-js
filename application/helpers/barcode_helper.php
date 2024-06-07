@@ -1,4 +1,5 @@
 <?php
+require 'vendor/autoload.php';
 
 use Picqer\Barcode\BarcodeGeneratorHTML;
 use Picqer\Barcode\BarcodeGeneratorPNG;

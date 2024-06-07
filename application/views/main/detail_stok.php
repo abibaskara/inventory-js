@@ -34,7 +34,7 @@
             <div class="block block-rounded d-flex flex-column h-100 mb-0">
                 <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                     <dl class="mb-0">
-                        <dt class="fs-3 fw-bold" id="txt-stok-in">0</dt>
+                        <dt class="fs-3 fw-bold" id="txt-stok-detail-in">0</dt>
                         <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Total IN</dd>
                     </dl>
                     <div class="item item-rounded-lg bg-body-light">
@@ -47,7 +47,7 @@
             <div class="block block-rounded d-flex flex-column h-100 mb-0">
                 <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                     <dl class="mb-0">
-                        <dt class="fs-3 fw-bold" id="txt-stok-out">0</dt>
+                        <dt class="fs-3 fw-bold" id="txt-stok-detail-out">0</dt>
                         <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Total Out</dd>
                     </dl>
                     <div class="item item-rounded-lg bg-body-light">
@@ -60,7 +60,7 @@
             <div class="block block-rounded d-flex flex-column h-100 mb-0">
                 <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                     <dl class="mb-0">
-                        <dt class="fs-3 fw-bold" id="txt-stok-allstok">0</dt>
+                        <dt class="fs-3 fw-bold" id="txt-stok-detail-allstok">0</dt>
                         <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Total Stok</dd>
                     </dl>
                     <div class="item item-rounded-lg bg-body-light">
@@ -131,7 +131,7 @@
                 </div>
                 <div class=" row">
                     <div class="col-sm-8 ms-auto">
-                        <button type="button" class="btn rounded-pill btn-alt-secondary me-1 mb-3" style="float: right;" id="btn-generate-barcode-stok">
+                        <button type="button" class="btn rounded-pill btn-alt-secondary me-1 mb-3" style="float: right;" onclick="generateBarcode()" id="btn-generate-barcode-stok">
                             <i class="fa fa-fw fa-barcode me-1"></i> Genearte Barcode
                         </button>
                     </div>
@@ -152,7 +152,7 @@
         </div>
         <div class="block-content block-content-full overflow-x-auto">
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-            <table class="table table-bordered table-striped table-vcenter" id="datatable-list-history">
+            <table class="table table-bordered table-striped table-vcenter" id="datatable-list-history-stok">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">No</th>
@@ -173,9 +173,13 @@
 
 <script>
     var kode_barang = '<?= $kode_barang ?>';
-    var urlDetailHeaderStok = '<?= base_url() ?>api/stok/detail_header'
+    var urlDetailHeaderStok = '<?= base_url() ?>api/stok/detail_header';
+    var urlDetailCardStok = '<?= base_url() ?>api/stok/detail_card';
+    var urlDatatableHistoryStok = '<?= base_url() ?>api/stok/datatable_history';
+    var urlDetailGenerateBarcode = '<?= base_url() ?>api/stok/detail_generate_barcode';
 
     $(function() {
+        var tableHistoryStok = '';
         cardDetailStok();
 
         getDetailStok();
@@ -205,5 +209,79 @@
 
             }
         })
+    }
+
+    function cardDetailStok() {
+
+        $.ajax({
+            url: urlDetailCardStok,
+            type: 'GET',
+            dataType: 'JSON',
+            data: {
+                kode_barang: kode_barang
+            },
+            success: function(res) {
+                $('#txt-stok-detail-in').html(res.data.total_in);
+                $('#txt-stok-detail-out').html(res.data.total_out);
+                $('#txt-stok-detail-allstok').html(res.data.total_stok);
+            }
+        })
+    }
+
+    tableHistoryStok = $("#datatable-list-history-stok").DataTable({
+        pagingType: "simple_numbers",
+        layout: {
+            topStart: {
+                pageLength: {
+                    menu: [5, 10, 15, 20]
+                }
+            }
+        },
+        pageLength: 10,
+        autoWidth: !1,
+        ajax: {
+            url: urlDatatableHistoryStok,
+            type: "POST",
+            data: {
+                kode_barang: kode_barang
+            }
+        },
+        columns: [{
+                "data": "no"
+            },
+            {
+                "data": "kode_barang"
+            },
+            {
+                "data": "nama_barang"
+            },
+            {
+                "data": "qty"
+            },
+            {
+                "data": "tgl_action"
+            },
+            {
+                "data": null,
+                "render": function(data, type, row) {
+                    if (row.type == 'IN')
+                        return `<strong style="color:white">${row.type}</strong style="color:white">`
+                    else
+                        return `<strong style="color:white">${row.type}</strong style="color:white">`
+                },
+            }
+        ],
+        createdRow: function(row, data, dataIndex) {
+            if (data.type == 'IN') {
+                $(row).find('td:eq(5)').css('background-color', 'green');
+            } else {
+                $(row).find('td:eq(5)').css('background-color', 'red');
+            }
+        }
+    })
+
+    function generateBarcode() {
+        var newUrl = urlDetailGenerateBarcode + '?kode_barang=' + kode_barang;
+        window.open(newUrl, '_blank');
     }
 </script>
