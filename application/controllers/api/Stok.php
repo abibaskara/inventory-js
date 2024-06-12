@@ -35,8 +35,8 @@ class Stok extends CI_Controller
                     'kode_barang' => $key['kode_barang'],
                     'nama_barang' => $key['nama_barang'],
                     'jumlah_barang' => $key['jumlah_barang'],
-                    'harga_barang' => 'Rp. ' . number_format($key['harga_barang'], 0),
-                    'total_harga' => 'Rp. ' . number_format($key['total'], 0),
+                    // 'harga_barang' => 'Rp. ' . number_format($key['harga_barang'], 0),
+                    // 'total_harga' => 'Rp. ' . number_format($key['total'], 0),
                 ];
                 $no++;
             }

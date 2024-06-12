@@ -33,18 +33,18 @@ class Barang_masuk_model extends CI_Model
         $add_nama_barang = $data['add_nama_barang'];
         $add_category_barang = $data['add_category_barang'];
         $add_jumlah_barang = $data['add_jumlah_barang'];
-        $add_harga_persatuan = $data['add_harga_persatuan'];
+        // $add_harga_persatuan = $data['add_harga_persatuan'];
         $add_description_barang = $data['add_description_barang'];
-        $add_total = $data['add_total'];
+        // $add_total = $data['add_total'];
 
         try {
             $insert = [
                 'kode_barang' => $add_kode_barang,
                 'nama_barang' => $add_nama_barang,
                 'jumlah_barang' => $add_jumlah_barang,
-                'harga_barang' => $add_harga_persatuan,
+                // 'harga_barang' => $add_harga_persatuan,
                 'deskripsi_barang' => $add_description_barang,
-                'total' => $add_total,
+                // 'total' => $add_total,
                 'id_category' => $add_category_barang,
             ];
             $this->db->insert('tbl_barang', $insert);
@@ -60,9 +60,9 @@ class Barang_masuk_model extends CI_Model
         $add_nama_barang = $data['add_nama_barang'];
         $add_category_barang = $data['add_category_barang'];
         $add_jumlah_barang = $data['add_jumlah_barang'];
-        $add_harga_persatuan = $data['add_harga_persatuan'];
+        // $add_harga_persatuan = $data['add_harga_persatuan'];
         $add_description_barang = $data['add_description_barang'];
-        $add_total = $data['add_total'];
+        // $add_total = $data['add_total'];
 
         $this->db->where('kode_barang', $add_kode_barang);
         $qObj = $this->db->get('tbl_barang');
@@ -76,9 +76,9 @@ class Barang_masuk_model extends CI_Model
                 'kode_barang' => $add_kode_barang,
                 'nama_barang' => $add_nama_barang,
                 'jumlah_barang' => $hasil,
-                'harga_barang' => $add_harga_persatuan,
+                // 'harga_barang' => $add_harga_persatuan,
                 'deskripsi_barang' => $add_description_barang,
-                'total' => $hasilHarga,
+                // 'total' => $hasilHarga,
                 'id_category' => $add_category_barang,
             ];
             $this->db->where('kode_barang', $add_kode_barang);
@@ -95,8 +95,8 @@ class Barang_masuk_model extends CI_Model
         $add_nama_barang = $data['add_nama_barang'];
         $add_category_barang = $data['add_category_barang'];
         $add_jumlah_barang = $data['add_jumlah_barang'];
-        $add_harga_persatuan = $data['add_harga_persatuan'];
-        $add_total = $data['add_total'];
+        // $add_harga_persatuan = $data['add_harga_persatuan'];
+        // $add_total = $data['add_total'];
         $date = date('Y-m-d H:i:s');
 
         //get id barang

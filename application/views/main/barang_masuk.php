@@ -65,7 +65,7 @@
                         <input type="number" min="0" class="form-control" id="add_jumlah_barang" name="add_jumlah_barang">
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <label class="col-sm-4 col-form-label" for="example-hf-harga-persatuan">Harga Persatuan <span style="color:red">*</span></label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control js-mask-rupiah" id="add_harga_persatuan" name="add_harga_persatuan" placeholder="Masukkan nominal">
@@ -76,7 +76,7 @@
                     <div class="col-sm-8">
                         <input type="text" class="form-control js-mask-rupiah form-control-alt" id="add_total" name="add_total" readonly>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <label class="col-sm-4 col-form-label" for="example-hf-description">Description</label>
                     <div class="col-sm-8">
@@ -151,18 +151,18 @@
             $(this).val(value);
         });
 
-        $('#add_harga_persatuan, #add_jumlah_barang').keyup(function() {
-            let value = $('#add_harga_persatuan').val().replace(/[^,\d]/g, '');
-            let jml_barang = $('#add_jumlah_barang').val().replace(/[^,\d]/g, '');
+        // $('#add_harga_persatuan, #add_jumlah_barang').keyup(function() {
+        //     let value = $('#add_harga_persatuan').val().replace(/[^,\d]/g, '');
+        //     let jml_barang = $('#add_jumlah_barang').val().replace(/[^,\d]/g, '');
 
-            if (value && jml_barang) {
-                let total = parseInt(value, 10) * parseInt(jml_barang, 10);
-                let formattedTotal = 'Rp. ' + total.toLocaleString('id-ID');
-                $('#add_total').val(formattedTotal);
-            } else {
-                $('#add_total').val('');
-            }
-        })
+        //     if (value && jml_barang) {
+        //         let total = parseInt(value, 10) * parseInt(jml_barang, 10);
+        //         let formattedTotal = 'Rp. ' + total.toLocaleString('id-ID');
+        //         $('#add_total').val(formattedTotal);
+        //     } else {
+        //         $('#add_total').val('');
+        //     }
+        // })
 
         $("#form-input-barang-masuk").validate({
             rules: {
@@ -180,12 +180,12 @@
                     min: 0,
                     number: true
                 },
-                add_harga_persatuan: {
-                    required: true,
-                },
-                add_total: {
-                    required: true,
-                },
+                // add_harga_persatuan: {
+                //     required: true,
+                // },
+                // add_total: {
+                //     required: true,
+                // },
             },
             submitHandler: function(form, e) {
                 e.preventDefault();
@@ -204,12 +204,12 @@
                 },
                 success: function(res) {
                     if (res.data != null) {
-                        var harga_satuan = res.data.harga_barang
-                        harga_satuan = 'Rp. ' + harga_satuan.toLocaleString('id-ID')
+                        // var harga_satuan = res.data.harga_barang
+                        // harga_satuan = 'Rp. ' + harga_satuan.toLocaleString('id-ID')
                         $('#add_nama_barang').val(res.data.nama_barang);
                         $('#add_category_barang').val(res.data.id_category).trigger('change');
                         $('#add_description_barang').val(res.data.deskripsi_barang);
-                        $('#add_harga_persatuan').val(harga_satuan);
+                        // $('#add_harga_persatuan').val(harga_satuan);
                         $('#card-history-barang-masuk').show();
                         var targetOffset = $('#card-history-barang-masuk').offset().top;
                         $('html, body').animate({
@@ -221,7 +221,7 @@
                         $('#add_nama_barang').val('');
                         $('#add_category_barang').val('').trigger('change');
                         $('#add_description_barang').val('');
-                        $('#add_harga_persatuan').val('');
+                        // $('#add_harga_persatuan').val('');
                         $('#card-history-barang-masuk').hide();
 
                     }
@@ -275,8 +275,8 @@
                 $('#add_nama_barang').val('');
                 $('#add_category_barang').val('').trigger('change');
                 $('#add_jumlah_barang').val('');
-                $('#add_harga_persatuan').val('');
-                $('#add_total').val('');
+                // $('#add_harga_persatuan').val('');
+                // $('#add_total').val('');
                 $('#add_description_barang').val('');
                 tableHistory.ajax.reload();
                 $('#card-history-barang-masuk').show();

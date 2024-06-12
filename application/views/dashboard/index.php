@@ -286,12 +286,12 @@
                 <span class="nav-main-link-name">PPIC</span>
               </a>
             </li>
-            <li class="nav-main-item">
+            <!-- <li class="nav-main-item">
               <a class="nav-main-link active" href="javascript:void(0)" onclick="v_purchase_order()">
                 <i class="nav-main-link-icon si si-basket"></i>
                 <span class="nav-main-link-name">Purchase Order</span>
               </a>
-            </li>
+            </li> -->
             <li class="nav-main-heading">Authenticate</li>
             <li class="nav-main-item">
               <a class="nav-main-link active" onclick="v_jabatan()" href="javascript:void(0)">
@@ -472,7 +472,7 @@
   const urlVStok = "<?= base_url() ?>main/stok";
   const urlVFPPIC = "<?= base_url() ?>main/fppic";
   const urlVPPIC = "<?= base_url() ?>main/ppic";
-  const urlVPO = "<?= base_url() ?>main/po";
+  // const urlVPO = "<?= base_url() ?>main/po";
 
   // authenticate
   const urlVJabatan = "<?= base_url() ?>authenticate/jabatan";

@@ -107,8 +107,8 @@
                         <th>Kode Barang</th>
                         <th class="d-none d-sm-table-cell" style="width: 30%;">Nama Barang</th>
                         <th class="d-none d-sm-table-cell" style="width: 15%;">Jumlah Barang</th>
-                        <th class="d-none d-sm-table-cell" style="width: 15%;">Harga Barang</th>
-                        <th class="d-none d-sm-table-cell" style="width: 15%;">Total Harga</th>
+                        <!-- <th class="d-none d-sm-table-cell" style="width: 15%;">Harga Barang</th>
+                        <th class="d-none d-sm-table-cell" style="width: 15%;">Total Harga</th> -->
                         <th class="d-none d-sm-table-cell" style="width: 15%;">Action</th>
                     </tr>
                 </thead>
@@ -123,6 +123,7 @@
 <script>
     var urlCardStok = '<?= base_url() ?>api/stok/card';
     var urlDatatableStok = '<?= base_url() ?>api/stok/datatable';
+    var urlGenerateStok = '<?= base_url() ?>api/stok/detail_generate_barcode';
     var urlVDetailStok = '<?= base_url() ?>main/stok/detail'
     $(function() {
         var tableStok = '';
@@ -170,18 +171,21 @@
             {
                 "data": "jumlah_barang"
             },
-            {
-                "data": "harga_barang"
-            },
-            {
-                "data": "total_harga"
-            },
+            // {
+            //     "data": "harga_barang"
+            // },
+            // {
+            //     "data": "total_harga"
+            // },
             {
                 "data": null,
                 "render": function(data, type, row) {
                     return `
-                            <button type="button" class="btn rounded-pill btn-secondary me-1 mb-3 btn-show" onclick="detailStok(${row.kode_barang})">
+                            <button type="button" class="btn btn-sm rounded-pill btn-secondary me-1 mb-3 btn-show" onclick="detailStok(${row.kode_barang})">
                                 <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm rounded-pill btn-primary me-1 mb-3 btn-show" onclick="barcodeGenerate(${row.kode_barang})">
+                                <i class="fa fa-fw fa-barcode"></i>
                             </button>`
                 },
                 "orderable": false,
@@ -198,5 +202,10 @@
                 $('#contents').html(res)
             }
         })
+    }
+
+    function barcodeGenerate(kode_barang) {
+        var newUrl = urlGenerateStok + '?kode_barang=' + kode_barang;
+        window.open(newUrl, '_blank');
     }
 </script>

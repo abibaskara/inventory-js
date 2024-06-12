@@ -18,8 +18,8 @@ class Barang_masuk extends CI_Controller
         $data['add_category_barang'] = $this->input->post('add_category_barang');
         $data['add_jumlah_barang'] = $this->input->post('add_jumlah_barang');
         $data['add_description_barang'] = $this->input->post('add_description_barang');
-        $data['add_harga_persatuan'] = preg_replace('/\D/', '', $this->input->post('add_harga_persatuan'));
-        $data['add_total'] = preg_replace('/\D/', '', $this->input->post('add_total'));
+        // $data['add_harga_persatuan'] = preg_replace('/\D/', '', $this->input->post('add_harga_persatuan'));
+        // $data['add_total'] = preg_replace('/\D/', '', $this->input->post('add_total'));
 
 
         //update barang

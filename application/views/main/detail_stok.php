@@ -111,7 +111,7 @@
                         <p id="txt-detail-jumlah_barang">:</p>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <label class="col-sm-4 col-form-label" for="example-hf-harga-persatuan">Harga Persatuan</label>
                     <div class="col-sm-8">
                         <p id="txt-detail-harga_persatuan">:</p>
@@ -122,7 +122,7 @@
                     <div class="col-sm-8">
                         <p id="txt-detail-total">:</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <label class="col-sm-4 col-form-label" for="example-hf-description">Description</label>
                     <div class="col-sm-8">
@@ -194,17 +194,17 @@
                 kode_barang: kode_barang
             },
             success: function(res) {
-                var harga_satuan = res.data.harga_barang
-                harga_satuan = 'Rp. ' + harga_satuan.toLocaleString('id-ID')
-                var total = res.data.total
-                total = 'Rp. ' + total.toLocaleString('id-ID')
+                // var harga_satuan = res.data.harga_barang
+                // harga_satuan = 'Rp. ' + harga_satuan.toLocaleString('id-ID')
+                // var total = res.data.total
+                // total = 'Rp. ' + total.toLocaleString('id-ID')
 
-                $('#detail_kode_barang').val(': ' + res.data.kode_barang);
+                $('#detail_kode_barang').val(res.data.kode_barang);
                 $('#txt-detail-nama_barang').text(': ' + res.data.nama_barang);
                 $('#txt-detail-category_barang').text(': ' + res.data.nama_category);
                 $('#txt-detail-jumlah_barang').text(': ' + res.data.jumlah_barang);
-                $('#txt-detail-harga_persatuan').text(': ' + harga_satuan);
-                $('#txt-detail-total').text(': ' + total);
+                // $('#txt-detail-harga_persatuan').text(': ' + harga_satuan);
+                // $('#txt-detail-total').text(': ' + total);
                 $('#txt-detail-description').text(': ' + res.data.deskripsi_barang);
 
             }
