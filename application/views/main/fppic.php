@@ -38,24 +38,25 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-6">
-                            Nama
+                            <strong>Nama</strong>
                         </div>
                         <div class="col-sm-6">
-                            : Test
+                            : <?= $this->session->userdata('fullname') ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-6">
-                            Tanggal
+                            <strong>Tanggal</strong>
                         </div>
                         <div class="col-sm-6">
-                            : 06/12/2024
+                            : <?= date('d/m/Y') ?>
                         </div>
                     </div>
                 </div>
             </div>
+            <hr>
             <form class="space-y-4" id="form-input-form-ppic">
                 <div class="row">
                     <label class="col-sm-4 col-form-label" for="example-hf-kode-barang">Kode Order <span style="color:red">*</span></label>
@@ -65,6 +66,22 @@
                                 <i class="fa fa-barcode"></i>
                             </span>
                             <input type="text" class="form-control form-control-alt" id="add_kode_order" name="add_kode_order" placeholder="Create " readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-4 col-form-label" for="example-hf-add_produk">Produk <span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="add_produk" name="add_produk" placeholder="Create Produk">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-4 col-form-label" for="example-hf-quantity_order">Quantity Order <span style="color:red">*</span></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control" id="quantity_order" name="quantity_order" placeholder="Create Quantity Order">
                         </div>
                     </div>
                 </div>
@@ -86,7 +103,8 @@
                     <tr>
                         <th>Kode Barang</th>
                         <th class="d-none d-sm-table-cell" style="width: 50%;">Nama Barang</th>
-                        <th class="d-none d-sm-table-cell" style="width: 25%;">Qty Order</th>
+                        <th class="d-none d-sm-table-cell" style="width: 25%;">Qty</th>
+                        <th class="d-none d-sm-table-cell" style="width: 25%;">Stock</th>
                         <th class="d-none d-sm-table-cell" style="width: 25%;">Action</th>
                     </tr>
                 </thead>
@@ -96,7 +114,7 @@
             </table>
                 <div class=" row">
                     <div class="col-sm-8 ms-auto">
-                        <button type="submit" class="btn btn-primary" style="float:right" id="btn-add-barang_masuk">Tambah</button>
+                        <button type="submit" class="btn btn-primary" style="float:right" id="btn-add-fppic">Tambah</button>
                     </div>
                 </div>
             </form>
@@ -111,26 +129,30 @@
     
     One.helpersOnLoad(['jq-select2']);
     var urlGetBarang = '<?= base_url() ?>api/fppic/get_barang';
+    var urlPostPPIC = '<?= base_url() ?>api/fppic/create_ppic';
     $(function() {
         updateDateTime()
         getBarang();
 
         $('#add_kode_barang').change(function() {
             var selectedOption = $(this).find('option:selected');
-            var val = selectedOption.val(); // Untuk mendapatkan nilai (value)
+            var val = selectedOption.val();
+            var qty = selectedOption.data('qty');
+            var id_barang = selectedOption.data('id_barang');
             if(val != '') {
                 var text = selectedOption.text(); // Untuk mendapatkan teks
                 var parts = text.split('|');
                 var nama_barang = parts[1].trim();
-    
                 var html = `
                         <tr id="row_${val}">
                             <td>${val}</td>
                             <td>${nama_barang}</td>
                             <td>
-                                <input type="hidden" name="add_kode_barang[]">
-                                <input type="number" class="form-control" name="add_qty_order[]" >
+                                <input type="hidden" name="add_id_barang[]" value="${id_barang}">
+                                <input type="hidden" name="add_stock_barang[]" value="${qty}">
+                                <input type="number" class="form-control add_qty_order" data-id="${val}" max="${qty}" name="add_qty_order[]" >
                             </td>
+                            <td>${qty}</td>
                             <td>
                                 <button type="button" class="btn btn-sm rounded-pill btn-secondary me-1 mb-3 btn-show" onclick="deleteRow('${val}')">
                                     <i class="fa fa-fw fa-trash"></i>
@@ -141,7 +163,56 @@
                 $(this).val('').trigger('change')
             }
         })
+        
+        $("#form-input-form-ppic").validate({
+            rules: {
+                add_produk: {
+                    required: true,
+                },
+                quantity_order: {
+                    required: true,
+                },
+            },
+            submitHandler: function(form, e) {
+                e.preventDefault();
+                post_add_fppic($(form))
+            }
+        })
     })
+
+    function post_add_fppic($form)
+    {
+        $.ajax({
+            url: urlPostPPIC,
+            type: "POST",
+            data: $form.serialize(),
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#btn-add-fppic').html('loading...');
+                $('#btn-add-fppic').prop('disabled', true);
+            },
+            success: function(res) {
+                if (res.status == 'Success') {
+                    One.helpers('jq-notify', {
+                        type: 'success',
+                        icon: 'fa fa-check me-1',
+                        message: `${res.messages}`
+                    });
+                } else {
+                    One.helpers('jq-notify', {
+                        type: 'danger',
+                        icon: 'fa fa-times me-1',
+                        message: `${res.messages}`
+                    });
+                }
+                $('#btn-add-fppic').html('Save');
+                $('#btn-add-fppic').prop('disabled', false);
+                v_form_ppic();
+            }
+
+        })
+    }
+
     function updateDateTime() {
         var now = new Date();
         var year = now.getFullYear().toString().slice(-2);
@@ -164,7 +235,7 @@
                 console.log(res.data)
                 let option = '<option value="">--Pilih--</option>';
                 $.each(res.data, function(key, value) {
-                    option += `<option value="${value.kode_barang}">${value.kode_barang} | ${value.nama_barang}</option>`
+                    option += `<option value="${value.kode_barang}" data-qty="${value.jumlah_barang}" data-id_barang="${value.id_barang}">${value.kode_barang} | ${value.nama_barang}</option>`
                 })
                 $('#add_kode_barang').html(option);
             }
@@ -174,4 +245,6 @@
     function deleteRow(val) {
         $('#row_' + val).remove();
     }
+
+
 </script>

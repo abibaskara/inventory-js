@@ -71,7 +71,7 @@ class Barang_masuk_model extends CI_Model
 
             $qty1 = $get['jumlah_barang'];
             $hasil = intval($add_jumlah_barang) + intval($qty1);
-            $hasilHarga = intval($add_harga_persatuan) * intval($hasil);
+            // $hasilHarga = intval($add_harga_persatuan) * intval($hasil);
             $update = [
                 'kode_barang' => $add_kode_barang,
                 'nama_barang' => $add_nama_barang,

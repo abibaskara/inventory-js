@@ -26,4 +26,29 @@ class Fppic extends CI_Controller
         
         echo json_encode($response);
     }
+
+    public function create_ppic()
+    {
+        $data['id_user'] = $this->session->userdata('id_user');
+        $data['add_kode_order'] = $this->input->post('add_kode_order');
+        $data['add_produk'] = $this->input->post('add_produk');
+        $data['quantity_order'] = $this->input->post('quantity_order');
+        $data['tgl_start'] = date('Y-m-d H:i:s');
+        $data['add_id_barang'] = $this->input->post('add_id_barang');
+        $data['add_qty_order'] = $this->input->post('add_qty_order');
+        $data['add_stock_barang'] = $this->input->post('add_stock_barang');
+
+        $insert = $this->fppic_model->create_ppic($data);
+        
+        if ($insert == TRUE) {
+            $response['status'] = 'Success';
+            $response['messages'] = 'Success add ppic';
+        } else {
+            $response['status'] = 'Error';
+            $response['messages'] = $insert;
+        }
+
+        echo json_encode($response);
+
+    }
 }

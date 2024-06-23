@@ -181,10 +181,10 @@
                 "data": null,
                 "render": function(data, type, row) {
                     return `
-                            <button type="button" class="btn btn-sm rounded-pill btn-secondary me-1 mb-3 btn-show" onclick="detailStok(${row.kode_barang})">
+                            <button type="button" class="btn btn-sm rounded-pill btn-secondary me-1 mb-3 btn-show" onclick="detailStok('${row.kode_barang}')">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
-                            <button type="button" class="btn btn-sm rounded-pill btn-primary me-1 mb-3 btn-show" onclick="barcodeGenerate(${row.kode_barang})">
+                            <button type="button" class="btn btn-sm rounded-pill btn-primary me-1 mb-3 btn-show" onclick="barcodeGenerate('${row.kode_barang}')">
                                 <i class="fa fa-fw fa-barcode"></i>
                             </button>`
                 },

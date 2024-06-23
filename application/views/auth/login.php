@@ -10,7 +10,7 @@
                         <div class="block-header block-header-default">
                             <h3 class="block-title">Sign In</h3>
                             <div class="block-options">
-                                <a class="btn-block-option fs-sm" href="op_auth_reminder.html">Forgot Password?</a>
+                                <!-- <a class="btn-block-option fs-sm" href="op_auth_reminder.html">Forgot Password?</a> -->
                                 <a class="btn-block-option" href="javascript:void(0)" onclick="register(); return false;" data-bs-toggle="tooltip" data-bs-placement="left" title="New Account">
                                     <i class="fa fa-user-plus"></i>
                                 </a>

@@ -5,16 +5,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <title>OneUI - Bootstrap 5 Admin Template &amp; UI Framework</title>
+  <title>Sistem Inventory</title>
 
-  <meta name="description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+  <meta name="description" content="Sistem Inventory">
   <meta name="author" content="pixelcave">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph Meta -->
-  <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
-  <meta property="og:site_name" content="OneUI">
-  <meta property="og:description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+  <meta property="og:title" content="Sistem Inventory">
+  <meta property="og:site_name" content="Sistem Inventory">
+  <meta property="og:description" content="Sistem Inventory">
   <meta property="og:type" content="website">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
@@ -248,19 +248,23 @@
                 <span class="nav-main-link-name">Dashboard</span>
               </a>
             </li>
-            <li class="nav-main-heading">Master</li>
-            <li class="nav-main-item">
-              <a class="nav-main-link active" onclick="v_supplier()" href="javascript:void(0)">
-                <i class="nav-main-link-icon si si-notebook"></i>
-                <span class="nav-main-link-name">Supplier</span>
-              </a>
-            </li>
-            <li class="nav-main-item">
-              <a class="nav-main-link active" onclick="v_category()" href="javascript:void(0)">
-                <i class="nav-main-link-icon si si-layers"></i>
-                <span class="nav-main-link-name">Category</span>
-              </a>
-            </li>
+            <?php if($this->session->userdata('role_name') == 'admin') { ?>
+              <li class="nav-main-heading">Master</li>
+              <li class="nav-main-item">
+                <a class="nav-main-link active" onclick="v_supplier()" href="javascript:void(0)">
+                  <i class="nav-main-link-icon si si-notebook"></i>
+                  <span class="nav-main-link-name">Supplier</span>
+                </a>
+              </li>
+              <li class="nav-main-item">
+                <a class="nav-main-link active" onclick="v_category()" href="javascript:void(0)">
+                  <i class="nav-main-link-icon si si-layers"></i>
+                  <span class="nav-main-link-name">Category</span>
+                </a>
+              </li>
+            <?php } ?>
+            
+            <?php if($this->session->userdata('role_name') == 'admin' || $this->session->userdata('role_name') == 'produksi') { ?>
             <li class="nav-main-heading">Main</li>
             <li class="nav-main-item">
               <a class="nav-main-link active" href="javascript:void(0)" onclick="v_barang_masuk()">
@@ -274,24 +278,39 @@
                 <span class="nav-main-link-name">Stok Barang</span>
               </a>
             </li>
+            <?php } ?>
+            <?php if($this->session->userdata('role_name') == 'admin' || $this->session->userdata('role_name') == 'user') { ?>
             <li class="nav-main-item">
               <a class="nav-main-link active" href="javascript:void(0)" onclick="v_form_ppic()">
                 <i class="nav-main-link-icon si si-cursor"></i>
                 <span class="nav-main-link-name">Form PPIC</span>
               </a>
             </li>
+            <?php } ?>
+            
+            <?php if($this->session->userdata('role_name') == 'admin' || $this->session->userdata('role_name') == 'user' || $this->session->userdata('role_name') == 'produksi') { ?>
             <li class="nav-main-item">
               <a class="nav-main-link active" href="javascript:void(0)" onclick="v_ppic()">
                 <i class="nav-main-link-icon si si-notebook"></i>
                 <span class="nav-main-link-name">PPIC</span>
               </a>
             </li>
+            <?php } ?>
+            <?php if($this->session->userdata('role_name') == 'admin') { ?>
+            <li class="nav-main-item">
+              <a class="nav-main-link active" href="javascript:void(0)" onclick="v_produk()">
+                <i class="nav-main-link-icon si si-drawer"></i>
+                <span class="nav-main-link-name">Produk</span>
+              </a>
+            </li>
+            <?php } ?>
             <!-- <li class="nav-main-item">
               <a class="nav-main-link active" href="javascript:void(0)" onclick="v_purchase_order()">
                 <i class="nav-main-link-icon si si-basket"></i>
                 <span class="nav-main-link-name">Purchase Order</span>
               </a>
             </li> -->
+            <?php if($this->session->userdata('role_name') == 'admin') { ?>
             <li class="nav-main-heading">Authenticate</li>
             <li class="nav-main-item">
               <a class="nav-main-link active" onclick="v_jabatan()" href="javascript:void(0)">
@@ -311,6 +330,9 @@
                 <span class="nav-main-link-name">Users</span>
               </a>
             </li>
+            <?php } ?>
+            
+            <?php if($this->session->userdata('role_name') == 'admin' || $this->session->userdata('role_name') == 'manager') { ?>
             <li class="nav-main-heading">Report</li>
             <li class="nav-main-item">
               <a class="nav-main-link active" href="javascript:void(0)" onclick="v_report_barang_masuk()">
@@ -324,6 +346,7 @@
                 <span class="nav-main-link-name">Report Barang Keluar</span>
               </a>
             </li>
+            <?php } ?>
           </ul>
         </div>
         <!-- END Side Navigation -->
@@ -362,8 +385,8 @@
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                 <img class="img-avatar img-avatar48 img-avatar-thumb" src="<?= base_url() ?>assets/media/avatars/avatar10.jpg" alt="">
-                <p class="mt-2 mb-0 fw-medium">John Smith</p>
-                <p class="mb-0 text-muted fs-sm fw-medium">Web Developer</p>
+                <p class="mt-2 mb-0 fw-medium"><?= $this->session->userdata('fullname') ?></p>
+                <p class="mb-0 text-muted fs-sm fw-medium"><?= $this->session->userdata('jabatan') ?></p>
               </div>
               <div class="p-2">
                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="be_pages_generic_profile.html">
@@ -472,7 +495,7 @@
   const urlVStok = "<?= base_url() ?>main/stok";
   const urlVFPPIC = "<?= base_url() ?>main/fppic";
   const urlVPPIC = "<?= base_url() ?>main/ppic";
-  // const urlVPO = "<?= base_url() ?>main/po";
+  const urlVProduk = "<?= base_url() ?>main/produk";
 
   // authenticate
   const urlVJabatan = "<?= base_url() ?>authenticate/jabatan";
@@ -577,9 +600,9 @@
     })
   }
 
-  function v_purchase_order() {
+  function v_produk() {
     $.ajax({
-      url: urlVPO,
+      url: urlVProduk,
       type: "GET",
       success: function(res) {
         $('#contents').html(res);

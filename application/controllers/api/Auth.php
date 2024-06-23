@@ -15,6 +15,8 @@ class Auth extends CI_Controller {
         $signup_fullname = $this->input->post('signup_fullname');
         $signup_email = $this->input->post('signup_email');
         $signup_password = $this->input->post('signup_password');
+        $signup_jabatan = $this->input->post('signup_jabatan');
+        $signup_role = $this->input->post('signup_role');
         $signup_terms = $this->input->post('signup_terms');
 
         $save = $this->auth_model->register($_POST);

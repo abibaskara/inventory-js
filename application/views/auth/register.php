@@ -1,3 +1,9 @@
+<style>
+
+    #messages_password {
+        color: red;
+    }
+</style>
 <!-- Main Container -->
 <main id="main-container">
     <!-- Page Content -->
@@ -37,7 +43,16 @@
                                             <input type="email" class="form-control form-control-lg form-control-alt" id="signup_email" name="signup_email" placeholder="Email">
                                         </div>
                                         <div class="mb-4">
+                                            <select class="js-select2 form-select" id="signup_jabatan" name="signup_jabatan" style="width: 100%;" data-placeholder="Jabatan">
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
+                                            <select class="js-select2 form-select" id="signup_role" name="signup_role" style="width: 100%;" data-placeholder="Role">
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
                                             <input type="password" class="form-control form-control-lg form-control-alt" id="signup_password" name="signup_password" placeholder="Password">
+                                            <span id="messages_password"></span>
                                         </div>
                                         <div class="mb-4">
                                             <input type="password" class="form-control form-control-lg form-control-alt" id="signup_password_confirm" name="signup_password_confirm" placeholder="Confirm Password">
@@ -104,13 +119,27 @@
 <!-- END Main Container -->
 
 <script>
+    
+    var urlGetJabatan = '<?= base_url() ?>api/jabatan/datatable';
+    var urlGetRole = '<?= base_url() ?>api/role/datatable';
+    One.helpersOnLoad(['jq-select2']);
+
     $(function() {
+        load_jabatan();
+        load_role();
+
         $("#form-regis").validate({
             rules: {
                 signup_fullname: {
                     required: true
                 },
                 signup_email: {
+                    required: true
+                },
+                signup_jabatan: {
+                    required: true
+                },
+                signup_role: {
                     required: true
                 },
                 signup_password: {
@@ -128,7 +157,53 @@
                 post_regis($(form))
             }
         })
+
+
+        $('#signup_password, #signup_password_confirm').on('keyup', function() {
+            var password = $('#signup_password').val();
+            var confirmPassword = $('#signup_password_confirm').val();
+
+            if (password !== confirmPassword) {
+                $('#messages_password').text('Passwords do not match');
+            } else {
+                $('#messages_password').text('');
+            }
+        });
     })
+
+    function load_jabatan()
+    {
+        $.ajax({
+            url: urlGetJabatan,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(res)
+            {
+                let option = '<option value="">--Pilih--</option>';
+                $.each(res.data, function(key, value) {
+                    option += `<option value="${value.id}">${value.jabatan}</option>`
+                })
+                $('#signup_jabatan').html(option);
+            }
+        })
+    }
+
+    function load_role()
+    {
+        $.ajax({
+            url: urlGetRole,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(res)
+            {
+                let option = '<option value="">--Pilih--</option>';
+                $.each(res.data, function(key, value) {
+                    option += `<option value="${value.id}">${value.role_name}</option>`
+                })
+                $('#signup_role').html(option);
+            }
+        })
+    }
 
     function post_regis($form) {
         $.ajax({

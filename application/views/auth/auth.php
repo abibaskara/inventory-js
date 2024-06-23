@@ -5,16 +5,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <title>OneUI - Bootstrap 5 Admin Template &amp; UI Framework</title>
+  <title>Sistem Inventory</title>
 
-  <meta name="description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+  <meta name="description" content="Sistem Inventory">
   <meta name="author" content="pixelcave">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph Meta -->
-  <meta property="og:title" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework">
+  <meta property="og:title" content="Sistem Inventory">
   <meta property="og:site_name" content="OneUI">
-  <meta property="og:description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+  <meta property="og:description" content="Sistem Inventory">
   <meta property="og:type" content="website">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
@@ -28,6 +28,7 @@
 
   <!-- Stylesheets -->
   <!-- OneUI framework -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/js/plugins/select2/css/select2.min.css">
   <link rel="stylesheet" id="css-main" href="<?= base_url() ?>assets/css/oneui.min.css">
 
   <script src="<?= base_url() ?>assets/js/oneui.app.min.js"></script>
@@ -38,6 +39,7 @@
   <script src="<?= base_url() ?>assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 
   <!-- Page JS Code -->
+  <script src="<?= base_url() ?>assets/js/plugins/select2/js/select2.full.min.js"></script>
   <script src="<?= base_url() ?>assets/js/pages/op_auth_signin.min.js"></script>
   <script src="<?= base_url() ?>assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
 
